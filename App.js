@@ -10,6 +10,7 @@ import {
 
 export default class App extends React.Component {
   render() {
+    someFunction = () => alert('yo!');
     return (
       <View style={styles.container}>
         <Card>
