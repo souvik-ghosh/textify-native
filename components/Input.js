@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class Input extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isFocused: false
+  }
+  this.handleBlur = this.handleBlur.bind(this);
+  this.handleFocus = this.handleFocus.bind(this);
   }
 
   componentWillMount() {
@@ -13,21 +18,29 @@ export default class Input extends Component {
     }
   }
 
+  handleFocus = () => this.setState({ isFocused: true })
+  handleBlur = () => this.setState({ isFocused: false })
+
   render() {
     return (
       <View style={styles.inputContainer}>
           <TextInput
           underlineColorAndroid="transparent"
           selectionColor="lightgray"
-          borderColor={"#3895D3"}
-          onBlur={this.props.onBlur}
-          placeholder={this.props.placeholder}
+          onTouchStart={this.handleFocus}
+          onBlur={this.handleBlur}
+          placeholder={this.props.placeholder || 'Placeholder'}
           value={this.props.value || null}
-          style={styles.input}
+          style={[styles.input, {
+            borderBottomColor: !this.state.isFocused
+              ? 'lightgray'
+              : "#3895D3",
+        }]}
+          onFocus={() => this.borderColor = 'red'}
         />
         {this.props.helpertext && (
           <View style={styles.helpertext}>
-          <Icon name="ios-warning" size={16} color="#8a6d3b"/>
+          <Icon name="exclamation-triangle" size={18} color="#8a6d3b"/>
           <Text
             style={{
               color: "#8a6d3b",
@@ -54,15 +67,14 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    paddingLeft: 10,
-    paddingRight: 10,
-    borderWidth: 1.5,
-    borderRadius: 3,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderBottomWidth: 2,
     width: "100%"
   },
   helpertext: {
     display: 'flex',
-    flexDirection:'row', flexWrap:'wrap',
+    flexDirection:'row',
     justifyContent: 'flex-start',
     paddingLeft: 10,
     paddingRight: 10,
@@ -71,8 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
     borderWidth: 1,
     borderColor: "#ffe3a9",
-    borderRadius: 3,
-    height: 30,
+    minHeight: 30,
   },
   toolbar: {
     backgroundColor: '#2196F3',

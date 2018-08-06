@@ -1,10 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage
-} from "react-native-elements";
 
 export default class App extends React.Component {
   render() {
@@ -14,7 +9,8 @@ export default class App extends React.Component {
         <TextInput
           underlineColorAndroid='transparent'
           selectionColor='lightgrey'
-          onBlur={someFunction}
+          autoFocus={false}
+          onBlur={ someFunction }
           placeholder="Name"
           style={{ height: 40, paddingLeft: 7, borderColor: '#3895D3', borderWidth: 1.5, borderRadius: 10, width: '80%' }}
         />

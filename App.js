@@ -1,43 +1,55 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar, ToolbarAndroid } from "react-native";
+import { StyleSheet, Text, View, StatusBar, Platform } from "react-native";
 import Input from "./components/Input";
-import { Header } from "react-native-elements";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Header from './components/Header';
+import FloatingInput from './components/FloatingInput';export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+      helper_text: 'abc',
+    };
 
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
 
-export default class App extends React.Component {
-  
+  handleInputChange = (newText) => this.setState({ value: newText });
+
   componentWillMount() {
     this.border_color = "#3895D3";
   }
   render() {
     someFunction = () => alert("yo!");
+    
     return (
-      <View style={styles.main}>
-        <StatusBar barStyle="light-content" hidden={false} />
-        <View style={styles.header}>
-          <Icon name="bars" size={30} color="white"/>
-        </View>
-        <Input helpertext="Please enter a valid email address." error />
+      <View style={styles.container}>
+        <Header />
+        <View style={styles.content}>
         <Text>Shake your phone to open the developer menu.</Text>
+        <View style={{width: "100%"}}>
+        <FloatingInput
+          label="Enter your name"
+          value={this.state.value}
+          onChangeText={this.handleInputChange}
+          helpertext={this.state.helper_text}
+        />
+      </View>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    backgroundColor: "#fff",
-    height: "100%",
-    width: "100%"
+  container: {
+    flex: 1
   },
-  header: {
-    height: 75,
+  content: {
     display: 'flex',
+    alignSelf: 'center',
+    padding: 10,
     justifyContent: 'center',
-    marginBottom: 10,
-    backgroundColor: '#0082e8'
+    alignItems: 'center',
+    width: '80%',
   }
-
 });

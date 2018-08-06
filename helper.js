@@ -1,0 +1,1 @@
+export default bindThis = (namee) => { this[namee] = this[namee].bind(this) }
